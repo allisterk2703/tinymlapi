@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+  namespace: tinymlapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: fastapi
+          image: ghcr.io/${GITHUB_USERNAME}/tinymlapi-fastapi:latest
+          ports:
+            - containerPort: 8000
